@@ -1,0 +1,70 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Beispieldaten//DRK Kalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Blutspende
+BEGIN:VEVENT
+UID:blutspende-uelzen-2026-11-10@blutspende.example
+DTSTAMP:20261101T090000Z
+DTSTART:20261110T140000Z
+DTEND:20261110T183000Z
+SUMMARY:Blutspende Uelzen
+LOCATION:DRK-Kreisverband\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
+DESCRIPTION:Bitte einen Lichtbildausweis mitbringen und vorher ausreichend essen und trinken. Erstspenderinnen und Erstspender sind willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:blutspende-bad-bevensen-2026-11-24@blutspende.example
+DTSTAMP:20261101T090000Z
+DTSTART:20261124T140000Z
+DTEND:20261124T183000Z
+SUMMARY:Blutspende Bad Bevensen
+LOCATION:Kurhaus (Beispielort)\, 29549 Bad Bevensen
+DESCRIPTION:Bitte einen Lichtbildausweis mitbringen und vorher ausreichend essen und trinken. Erstspenderinnen und Erstspender sind willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:blutspende-uelzen-2026-12-03@blutspende.example
+DTSTAMP:20261101T090000Z
+DTSTART:20261203T140000Z
+DTEND:20261203T183000Z
+SUMMARY:Blutspende Uelzen
+LOCATION:DRK-Kreisverband\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
+DESCRIPTION:Bitte einen Lichtbildausweis mitbringen und vorher ausreichend essen und trinken. Erstspenderinnen und Erstspender sind willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:blutspende-ebstorf-2026-12-15@blutspende.example
+DTSTAMP:20261101T090000Z
+DTSTART:20261215T140000Z
+DTEND:20261215T183000Z
+SUMMARY:Blutspende Ebstorf
+LOCATION:Grundschule (Beispielort)\, 29574 Ebstorf
+DESCRIPTION:Bitte einen Lichtbildausweis mitbringen und vorher ausreichend essen und trinken. Erstspenderinnen und Erstspender sind willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:blutspende-suderburg-2027-01-12@blutspende.example
+DTSTAMP:20261101T090000Z
+DTSTART:20270112T140000Z
+DTEND:20270112T183000Z
+SUMMARY:Blutspende Suderburg
+LOCATION:Gemeindehaus (Beispielort)\, 29556 Suderburg
+DESCRIPTION:Bitte einen Lichtbildausweis mitbringen und vorher ausreichend essen und trinken. Erstspenderinnen und Erstspender sind willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:blutspende-uelzen-2027-01-26@blutspende.example
+DTSTAMP:20261101T090000Z
+DTSTART:20270126T140000Z
+DTEND:20270126T183000Z
+SUMMARY:Blutspende Uelzen
+LOCATION:DRK-Kreisverband\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
+DESCRIPTION:Bitte einen Lichtbildausweis mitbringen und vorher ausreichend essen und trinken. Erstspenderinnen und Erstspender sind willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:blutspende-bienenb-ttel-2027-02-09@blutspende.example
+DTSTAMP:20261101T090000Z
+DTSTART:20270209T140000Z
+DTEND:20270209T183000Z
+SUMMARY:Blutspende Bienenbüttel
+LOCATION:Mehrzweckhalle (Beispielort)\, 29553 Bienenbüttel
+DESCRIPTION:Bitte einen Lichtbildausweis mitbringen und vorher ausreichend essen und trinken. Erstspenderinnen und Erstspender sind willkommen.
+END:VEVENT
+END:VCALENDAR

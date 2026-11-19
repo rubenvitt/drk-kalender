@@ -1,0 +1,53 @@
+name: Kalender bauen und veröffentlichen
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # stündlich, 17 Minuten nach der vollen Stunde (zur vollen Stunde sind die Runner voll)
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      # Schlägt das Laden eines Kalenders fehl, bricht der Build ab und die zuletzt
+      # veröffentlichte Version bleibt online.
+      - run: npm run build
+        env:
+          # Geheime Kalenderadressen als Repository-Secret anlegen und hier durchreichen,
+          # passend zu "urlEnv" in calendars.json, zum Beispiel:
+          # CAL_URL_BEREITSCHAFT: ${{ secrets.CAL_URL_BEREITSCHAFT }}
+          TZ: UTC
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,52 @@
+{
+  "title": "Termine im DRK-Kreisverband Uelzen",
+  "window": {
+    "monthsBack": 2,
+    "monthsAhead": 12
+  },
+  "calendars": [
+    {
+      "id": "blutspende",
+      "name": "Blutspende",
+      "color": "#e60005",
+      "file": "samples/blutspende.ics",
+      "registration": {
+        "type": "url",
+        "url": "https://www.example.org/blutspende/reservieren?termin={uid}",
+        "label": "Spendetermin reservieren"
+      }
+    },
+    {
+      "id": "bereitschaft",
+      "name": "Bereitschaft",
+      "color": "#002d55",
+      "file": "samples/bereitschaft.ics",
+      "registration": {
+        "type": "event-url",
+        "label": "Zum Dienst melden"
+      }
+    },
+    {
+      "id": "kurse",
+      "name": "Erste Hilfe & Kurse",
+      "color": "#2276d0",
+      "file": "samples/kurse.ics",
+      "registration": {
+        "type": "event-url",
+        "label": "Zum Kurs anmelden"
+      }
+    },
+    {
+      "id": "cafe",
+      "name": "Café & Treffpunkte",
+      "color": "#00848c",
+      "file": "samples/cafe.ics"
+    },
+    {
+      "id": "sport",
+      "name": "Bewegung & Sport",
+      "color": "#5a8f1c",
+      "file": "samples/sport.ics"
+    }
+  ]
+}

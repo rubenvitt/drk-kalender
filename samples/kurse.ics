@@ -1,0 +1,86 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Beispieldaten//DRK Kalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Erste Hilfe & Kurse
+BEGIN:VTIMEZONE
+TZID:Europe/Berlin
+X-LIC-LOCATION:Europe/Berlin
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:erste-hilfe-kurs@kurse.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20260912T083000
+DTEND;TZID=Europe/Berlin:20260912T163000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=SA
+URL:https://www.example.org/anmeldung/erste-hilfe-kurs
+SUMMARY:Erste-Hilfe-Kurs
+LOCATION:DRK-Kreisverband\, Lehrsaal\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
+DESCRIPTION:Der Kurs umfasst 9 Unterrichtseinheiten und gilt für <b>Führerschein</b>\, Betrieb und Studium.<br><br>Bitte bequeme Kleidung mitbringen.<br><a href="https://www.example.org/erste-hilfe">Mehr zum Kurs</a><script>alert("x")</script>
+END:VEVENT
+BEGIN:VEVENT
+UID:erste-hilfe-kurs@kurse.example
+DTSTAMP:20261101T090000Z
+RECURRENCE-ID;TZID=Europe/Berlin:20261219T083000
+DTSTART;TZID=Europe/Berlin:20261219T083000
+DTEND;TZID=Europe/Berlin:20261219T163000
+STATUS:CANCELLED
+SUMMARY:Erste-Hilfe-Kurs (abgesagt)
+LOCATION:DRK-Kreisverband\, Lehrsaal\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
+END:VEVENT
+BEGIN:VEVENT
+UID:eh-kind-2026-11@kurse.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20261128T090000
+DTEND;TZID=Europe/Berlin:20261128T160000
+URL:https://www.example.org/anmeldung/erste-hilfe-am-kind
+SUMMARY:Erste Hilfe am Kind
+LOCATION:DRK-Kreisverband\, Lehrsaal\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
+DESCRIPTION:Für Eltern\, Großeltern und alle\, die Kinder betreuen: Notfälle im Säuglings- und Kindesalter.
+END:VEVENT
+BEGIN:VEVENT
+UID:eh-kind-2027-01@kurse.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20270130T090000
+DTEND;TZID=Europe/Berlin:20270130T160000
+URL:https://www.example.org/anmeldung/erste-hilfe-am-kind
+SUMMARY:Erste Hilfe am Kind
+LOCATION:DRK-Kreisverband\, Lehrsaal\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
+DESCRIPTION:Für Eltern\, Großeltern und alle\, die Kinder betreuen: Notfälle im Säuglings- und Kindesalter.
+END:VEVENT
+BEGIN:VEVENT
+UID:eh-fit-20261208@kurse.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20261208T180000
+DTEND;TZID=Europe/Berlin:20261208T213000
+URL:https://www.example.org/anmeldung/erste-hilfe-auffrischen
+SUMMARY:Erste Hilfe auffrischen
+LOCATION:DRK-Kreisverband\, Lehrsaal\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
+DESCRIPTION:Kompakter Abendkurs für alle\, deren letzter Kurs ein paar Jahre zurückliegt.
+END:VEVENT
+BEGIN:VEVENT
+UID:eh-fit-20270119@kurse.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20270119T180000
+DTEND;TZID=Europe/Berlin:20270119T213000
+URL:https://www.example.org/anmeldung/erste-hilfe-auffrischen
+SUMMARY:Erste Hilfe auffrischen
+LOCATION:DRK-Kreisverband\, Lehrsaal\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
+DESCRIPTION:Kompakter Abendkurs für alle\, deren letzter Kurs ein paar Jahre zurückliegt.
+END:VEVENT
+END:VCALENDAR

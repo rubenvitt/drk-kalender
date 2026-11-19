@@ -1,0 +1,193 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Beispieldaten//DRK Kalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Bereitschaft
+BEGIN:VTIMEZONE
+TZID:Europe/Berlin
+X-LIC-LOCATION:Europe/Berlin
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:dienstabend@bereitschaft.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20260902T190000
+DTEND;TZID=Europe/Berlin:20260902T213000
+RRULE:FREQ=WEEKLY;BYDAY=WE;UNTIL=20270630T170000Z
+EXDATE;TZID=Europe/Berlin:20261223T190000,20261230T190000
+SUMMARY:Dienstabend
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Offener Dienstabend der Bereitschaft. Interessierte sind ohne Anmeldung willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:dienstabend@bereitschaft.example
+DTSTAMP:20261101T090000Z
+RECURRENCE-ID;TZID=Europe/Berlin:20261104T190000
+DTSTART;TZID=Europe/Berlin:20261104T190000
+DTEND;TZID=Europe/Berlin:20261104T213000
+SUMMARY:Dienstabend: Reanimation und AED
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Herz-Lungen-Wiederbelebung üben\, mit Übungspuppen und Defibrillator.\nInteressierte sind ohne Anmeldung willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:dienstabend@bereitschaft.example
+DTSTAMP:20261101T090000Z
+RECURRENCE-ID;TZID=Europe/Berlin:20261111T190000
+DTSTART;TZID=Europe/Berlin:20261111T190000
+DTEND;TZID=Europe/Berlin:20261111T213000
+SUMMARY:Dienstabend: Funk und Kommunikation im Einsatz
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Digitalfunk\, Lagekarte und Meldewege – wie sich Einsatzkräfte verständigen.\nInteressierte sind ohne Anmeldung willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:dienstabend@bereitschaft.example
+DTSTAMP:20261101T090000Z
+RECURRENCE-ID;TZID=Europe/Berlin:20261118T190000
+DTSTART;TZID=Europe/Berlin:20261118T190000
+DTEND;TZID=Europe/Berlin:20261118T213000
+SUMMARY:Dienstabend: Notunterkunft aufbauen
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Feldbetten\, Verpflegung\, Registrierung: wie eine Notunterkunft entsteht.\nInteressierte sind ohne Anmeldung willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:dienstabend@bereitschaft.example
+DTSTAMP:20261101T090000Z
+RECURRENCE-ID;TZID=Europe/Berlin:20261202T190000
+DTSTART;TZID=Europe/Berlin:20261202T190000
+DTEND;TZID=Europe/Berlin:20261202T213000
+SUMMARY:Dienstabend: Einblick in die Rettungshundestaffel
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Die Staffel zeigt\, wie Hund und Mensch nach Vermissten suchen.\nInteressierte sind ohne Anmeldung willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:dienstabend@bereitschaft.example
+DTSTAMP:20261101T090000Z
+RECURRENCE-ID;TZID=Europe/Berlin:20261209T190000
+DTSTART;TZID=Europe/Berlin:20261209T190000
+DTEND;TZID=Europe/Berlin:20261209T213000
+SUMMARY:Dienstabend: Strom und Licht im Einsatz
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Stromerzeuger\, Beleuchtung und Zeltaufbau.\nInteressierte sind ohne Anmeldung willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:dienstabend@bereitschaft.example
+DTSTAMP:20261101T090000Z
+RECURRENCE-ID;TZID=Europe/Berlin:20261216T190000
+DTSTART;TZID=Europe/Berlin:20261216T190000
+DTEND;TZID=Europe/Berlin:20261216T213000
+SUMMARY:Dienstabend: Jahresabschluss
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Rückblick auf das Jahr und Ausblick auf 2027. Für Getränke ist gesorgt.\nInteressierte sind ohne Anmeldung willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:dienstabend@bereitschaft.example
+DTSTAMP:20261101T090000Z
+RECURRENCE-ID;TZID=Europe/Berlin:20270113T190000
+DTSTART;TZID=Europe/Berlin:20270113T190000
+DTEND;TZID=Europe/Berlin:20270113T213000
+SUMMARY:Dienstabend: Jahresauftakt
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Planung der Ausbildungen und Dienste für das erste Halbjahr.\nInteressierte sind ohne Anmeldung willkommen.
+END:VEVENT
+BEGIN:VEVENT
+UID:dienstabend@bereitschaft.example
+DTSTAMP:20261101T090000Z
+RECURRENCE-ID;TZID=Europe/Berlin:20261125T190000
+DTSTART;TZID=Europe/Berlin:20261126T183000
+DTEND;TZID=Europe/Berlin:20261126T213000
+SUMMARY:Dienstabend: Praxisübung mit Fahrzeugen
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Wegen der Hallenbelegung ausnahmsweise am Donnerstag und schon ab 18:30 Uhr.\nBitte wetterfeste Kleidung mitbringen.
+END:VEVENT
+BEGIN:VEVENT
+UID:san-weihnachtsmarkt@bereitschaft.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20261128T140000
+DTEND;TZID=Europe/Berlin:20261128T200000
+URL:https://dienstplan.example.org/dienste/san-weihnachtsmarkt
+SUMMARY:Sanitätsdienst: Weihnachtsmarkt Uelzen
+LOCATION:Herzogenplatz\, 29525 Uelzen
+DESCRIPTION:Zwei Trupps\, Treffpunkt 13:30 Uhr an der Unterkunft.
+END:VEVENT
+BEGIN:VEVENT
+UID:san-adventskonzert@bereitschaft.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20261205T180000
+DTEND;TZID=Europe/Berlin:20261205T213000
+URL:https://dienstplan.example.org/dienste/san-adventskonzert
+SUMMARY:Sanitätsdienst: Adventskonzert
+LOCATION:St.-Marien-Kirche\, 29525 Uelzen
+DESCRIPTION:Ein Trupp mit Rucksack\, Einweisung vor Ort.
+END:VEVENT
+BEGIN:VEVENT
+UID:san-hallenturnier@bereitschaft.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20261212T090000
+DTEND;TZID=Europe/Berlin:20261212T180000
+URL:https://dienstplan.example.org/dienste/san-hallenturnier
+SUMMARY:Sanitätsdienst: Hallenfußballturnier
+LOCATION:Sporthalle (Beispielort)\, 29525 Uelzen
+DESCRIPTION:Ganztägiger Dienst\, Ablösung zur Mittagszeit möglich.
+END:VEVENT
+BEGIN:VEVENT
+UID:san-silvesterlauf@bereitschaft.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20261231T130000
+DTEND;TZID=Europe/Berlin:20261231T170000
+URL:https://dienstplan.example.org/dienste/san-silvesterlauf
+SUMMARY:Sanitätsdienst: Silvesterlauf
+LOCATION:Start am Rathaus\, 29525 Uelzen
+DESCRIPTION:Streckenposten mit Fahrrad und Rucksack.
+END:VEVENT
+BEGIN:VEVENT
+UID:san-winterball@bereitschaft.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20270123T190000
+DTEND;TZID=Europe/Berlin:20270124T020000
+URL:https://dienstplan.example.org/dienste/san-winterball
+SUMMARY:Sanitätsdienst: Winterball
+LOCATION:Stadthalle (Beispielort)\, 29525 Uelzen
+DESCRIPTION:Nachtdienst bis 2 Uhr.
+END:VEVENT
+BEGIN:VEVENT
+UID:tag-der-offenen-tuer@bereitschaft.example
+DTSTAMP:20261101T090000Z
+DTSTART;VALUE=DATE:20261205
+DTEND;VALUE=DATE:20261206
+SUMMARY:Tag der offenen Tür
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Fahrzeuge\, Technik und Mitmachstationen für die ganze Familie.
+END:VEVENT
+BEGIN:VEVENT
+UID:sanausbildung-2@bereitschaft.example
+DTSTAMP:20261101T090000Z
+DTSTART;VALUE=DATE:20270115
+DTEND;VALUE=DATE:20270118
+SUMMARY:Sanitätsausbildung\, Modul 2
+LOCATION:Ausbildungszentrum (Beispielort)\, Lüneburg
+DESCRIPTION:Wochenendlehrgang\, Übernachtung vor Ort.
+END:VEVENT
+BEGIN:VEVENT
+UID:blutspende-uelzen-2026-12-03@blutspende.example
+DTSTAMP:20261101T090000Z
+DTSTART:20261203T140000Z
+DTEND:20261203T183000Z
+SUMMARY:Blutspende Uelzen
+LOCATION:DRK-Kreisverband\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
+DESCRIPTION:Kopie aus dem Blutspende-Kalender (Betreuung durch die Bereitschaft).
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,22 @@
+{
+  "name": "drk-kalender",
+  "private": true,
+  "type": "module",
+  "description": "Statischer Monatskalender für DRK-Termine aus iCal-Feeds, zum Einbetten per iframe",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node src/build.js",
+    "test": "node --test test/*.test.js",
+    "serve": "node scripts/serve.js dist",
+    "shoot": "node scripts/shoot.js",
+    "demo": "node scripts/demo.js"
+  },
+  "dependencies": {
+    "ical.js": "^2.2.1"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.18.1"
+  }
+}

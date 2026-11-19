@@ -1,0 +1,56 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Beispieldaten//DRK Kalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Bewegung & Sport
+BEGIN:VEVENT
+UID:seniorengymnastik@sport.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=W. Europe Standard Time:20260907T100000
+DTEND;TZID=W. Europe Standard Time:20260907T110000
+RRULE:FREQ=WEEKLY;BYDAY=MO
+SUMMARY:Seniorengymnastik
+LOCATION:Turnhalle (Beispielort)\, 29525 Uelzen
+DESCRIPTION:Kräftigung und Beweglichkeit im Sitzen und Stehen. Bitte Turnschuhe mitbringen.
+END:VEVENT
+BEGIN:VEVENT
+UID:wassergymnastik@sport.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=W. Europe Standard Time:20260902T160000
+DTEND;TZID=W. Europe Standard Time:20260902T170000
+RRULE:FREQ=WEEKLY;BYDAY=WE
+SUMMARY:Wassergymnastik
+LOCATION:Badeland (Beispielort)\, 29525 Uelzen
+DESCRIPTION:Gelenkschonendes Training im warmen Wasser. Eintritt ins Bad ist selbst zu zahlen.
+END:VEVENT
+BEGIN:VEVENT
+UID:rehasport@sport.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=W. Europe Standard Time:20260904T093000
+DTEND;TZID=W. Europe Standard Time:20260904T103000
+RRULE:FREQ=WEEKLY;BYDAY=FR;UNTIL=20270430T235959Z
+SUMMARY:Rehasport Herz
+LOCATION:Turnhalle (Beispielort)\, 29525 Uelzen
+DESCRIPTION:Ärztlich verordneter Rehasport in der Herzsportgruppe. Eine Übungsleiterin und eine Ärztin sind dabei.
+END:VEVENT
+BEGIN:VEVENT
+UID:gedaechtnistraining@sport.example
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=W. Europe Standard Time:20260910T100000
+DTEND;TZID=W. Europe Standard Time:20260910T113000
+RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=TH
+SUMMARY:Gedächtnistraining
+LOCATION:DRK-Quartierscafé\, Beispielstraße 12\, 29525 Uelzen
+DESCRIPTION:Spielerische Übungen für Konzentration und Merkfähigkeit.
+END:VEVENT
+BEGIN:VEVENT
+UID:tanzen-im-sitzen@sport.example
+DTSTAMP:20261101T090000Z
+DTSTART:20261130T150000
+DTEND:20261130T163000
+SUMMARY:Tanzen im Sitzen
+LOCATION:DRK-Quartierscafé\, Beispielstraße 12\, 29525 Uelzen
+DESCRIPTION:Schnupperstunde. Keine Vorkenntnisse nötig.
+END:VEVENT
+END:VCALENDAR
