@@ -80,6 +80,35 @@ Wie Anmeldungen laufen sollen, ist nicht entschieden. Bis dahin hängt alles an 
 Ohne `registration` gibt es keinen Knopf. In den Beispieldaten haben Kurse, Blutspende und
 Sanitätsdienste einen, Café, Sport und Dienstabende nicht.
 
+## Dienstabende-Liste (wie das TYPO3-Plugin)
+
+Unter `/dienstabende/` liefert der Build dieselbe Ansicht wie das TYPO3-Plugin
+[drk_dienstabende](https://github.com/rubenvitt/typo3-drk-dienstabende): aufklappbare Termine im
+Akkordeon-Stil des DRK-CMS. Statt der Plugin-Optionen steuern Parameter in der Adresse:
+
+| Parameter | Werte | Standard |
+|---|---|---|
+| `darstellung` | `liste`, `monate` (nach Monaten), `naechster` (nur der nächste Termin als Hinweis) | `liste` |
+| `anzahl` | höchstens so viele Termine, `0` = alle | `5` |
+| `mehr` | Adresse für den Knopf „Alle Termine ansehen“ (öffnet im ganzen Fenster) | kein Knopf |
+
+Beispiel: `https://rubenvitt.github.io/drk-kalender/dienstabende/?darstellung=monate&anzahl=0`.
+Auf `einbetten.html` lassen sich die Parameter ausprobieren, der Code passt sich an.
+
+Welche Termine dazugehören, steht in `calendars.json`:
+
+```json
+"dienstabende": { "calendars": ["bereitschaft"], "titlePrefix": "Dienstabend" }
+```
+
+Ein Termin zählt, wenn er in einem der Kalender liegt und sein Titel mit dem Präfix beginnt.
+„Dienstabend: Reanimation und AED“ erscheint als „Reanimation und AED“. Vergangene Termine
+blendet die Seite selbst aus (der laufende Tag bleibt).
+
+Außerdem entsteht `dienstabende.json` im Format, das das Plugin liest. Das Plugin kann also
+auch direkt diese Daten anzeigen: `rubenvitt.github.io` in `allowedHosts` eintragen und als
+Adresse `https://rubenvitt.github.io/drk-kalender/dienstabende.json` angeben.
+
 ## Einbinden
 
 Nach dem ersten Deployment zeigt `https://rubenvitt.github.io/drk-kalender/einbetten.html` den

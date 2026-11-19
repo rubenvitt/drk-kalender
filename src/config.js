@@ -40,10 +40,19 @@ export function validateConfig(raw, baseDir = process.cwd()) {
   if (![monthsBack, monthsAhead].every((n) => Number.isInteger(n) && n >= 0 && n <= 36)) {
     errors.push('"window.monthsBack" und "window.monthsAhead" müssen ganze Zahlen von 0 bis 36 sein');
   }
+  const da = raw?.dienstabende;
+  if (da != null) {
+    if (typeof da !== 'object') errors.push('"dienstabende" muss ein Objekt sein');
+    else {
+      for (const id of da.calendars ?? []) if (!seen.has(id)) errors.push(`dienstabende.calendars: unbekannter Kalender "${id}"`);
+      if (da.titlePrefix != null && typeof da.titlePrefix !== 'string') errors.push('dienstabende.titlePrefix muss Text sein');
+    }
+  }
   if (errors.length) throw new Error('calendars.json ist ungültig:\n  - ' + errors.join('\n  - '));
   return {
     title: raw.title || 'Termine',
     window: { monthsBack, monthsAhead },
+    dienstabende: raw.dienstabende ?? null,
     calendars: calendars.map((c) => ({ ...c, file: c.file ? resolve(baseDir, c.file) : undefined })),
   };
 }

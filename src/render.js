@@ -44,6 +44,31 @@ ${js}
 `;
 }
 
+export function renderListPage({ data, css, js, fonts }) {
+  return `<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:,">
+<title>Dienstabende</title>
+<style>
+${fonts}
+${css}
+</style>
+</head>
+<body>
+<main id="app" aria-label="Dienstabende"><noscript><p>Die Termine brauchen JavaScript.</p></noscript></main>
+<script type="application/json" id="list-data">${jsonForScript(data)}</script>
+<script>
+${js}
+</script>
+</body>
+</html>
+`;
+}
+
 export function renderEmbedPage({ title, css, fonts }) {
   return `<!doctype html>
 <html lang="de">
@@ -65,6 +90,10 @@ pre { background: var(--soft); border: 1px solid var(--line); border-radius: var
 .frame-label { font-weight: 700; margin: 0 0 0.5rem; }
 iframe { display: block; width: 100%; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
 .phone iframe { width: 390px; max-width: 100%; }
+.da-form { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin: 1rem 0; }
+.da-form label { display: grid; gap: 0.25rem; font-weight: 600; font-size: 0.9rem; }
+.da-form select, .da-form input { font: inherit; font-weight: 400; padding: 0.4rem 0.6rem; border: 1px solid var(--line); border-radius: 0.5rem; min-width: 12rem; }
+code { font-size: 0.9em; background: var(--soft); padding: 0.1em 0.3em; border-radius: 0.25em; }
 </style>
 </head>
 <body>
@@ -77,6 +106,45 @@ iframe { display: block; width: 100%; border: 1px solid var(--line); border-radi
   <div><p class="frame-label">Breite Spalte</p><iframe data-drk-kalender title="${escapeHtml(title)}" style="height:900px"></iframe></div>
   <div class="phone"><p class="frame-label">Smartphone (390 Pixel)</p><iframe data-drk-kalender title="${escapeHtml(title)}, schmale Ansicht" style="height:900px"></iframe></div>
 </div>
+<h2>Dienstabende</h2>
+<p>Die Liste der Dienstabende wie im TYPO3-Plugin, unter <code>dienstabende/</code>. Gesteuert wird sie über Parameter in der Adresse:</p>
+<ul>
+  <li><code>darstellung</code>: <code>liste</code> (Standard), <code>monate</code> oder <code>naechster</code> (nur der nächste Termin als Hinweis)</li>
+  <li><code>anzahl</code>: höchstens so viele Termine, <code>0</code> = alle (Standard 5)</li>
+  <li><code>mehr</code>: Adresse für den Knopf „Alle Termine ansehen“ (optional)</li>
+</ul>
+<form id="da-form" class="da-form">
+  <label>Darstellung <select name="darstellung"><option value="liste">Aufklappbare Liste</option><option value="monate">Liste nach Monaten</option><option value="naechster">Nur der nächste Termin</option></select></label>
+  <label>Anzahl <input name="anzahl" type="number" min="0" value="5"></label>
+  <label>Knopf verlinkt auf <input name="mehr" type="url" placeholder="https://www.drk-uelzen.de/…"></label>
+</form>
+<pre id="da-snippet"></pre>
+<iframe id="da-preview" data-drk-kalender title="Dienstabende" style="height:600px;max-width:52rem"></iframe>
+<p>Die Termindaten gibt es auch als <a href="dienstabende.json">dienstabende.json</a> im Format, das das TYPO3-Plugin liest.</p>
+<script>
+(function () {
+  var base = location.href.replace(/[#?].*$/, '').replace(/einbetten[.]html$/, '');
+  var nl = String.fromCharCode(10);
+  var form = document.getElementById('da-form');
+  function updateList() {
+    var params = new URLSearchParams();
+    var d = form.darstellung.value, a = form.anzahl.value, m = form.mehr.value.trim();
+    if (d !== 'liste') params.set('darstellung', d);
+    if (a !== '' && a !== '5') params.set('anzahl', a);
+    if (m) params.set('mehr', m);
+    var qs = params.toString();
+    var src = base + 'dienstabende/' + (qs ? '?' + qs : '');
+    document.getElementById('da-preview').src = src;
+    document.getElementById('da-snippet').textContent =
+      '<iframe src="' + src + '" title="Dienstabende" loading="lazy" data-drk-kalender' + nl +
+      '        style="display:block;width:100%;height:600px;border:0"></iframe>' + nl +
+      '<script src="' + base + 'embed.js" async></' + 'script>';
+  }
+  form.addEventListener('input', updateList);
+  form.addEventListener('submit', function (e) { e.preventDefault(); });
+  updateList();
+})();
+</script>
 <script>
 (function () {
   var base = location.href.replace(/[#?].*$/, '').replace(/einbetten[.]html$/, '');

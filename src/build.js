@@ -10,7 +10,8 @@ import { parseArgs } from 'node:util';
 import { loadConfig } from './config.js';
 import { buildData } from './data.js';
 import { eventToIcs } from './ics-export.js';
-import { fontFaces, renderCalendarPage, renderEmbedPage } from './render.js';
+import { fontFaces, renderCalendarPage, renderEmbedPage, renderListPage } from './render.js';
+import { pluginJson, selectDienstabende } from './dienstabende.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const WEB = join(ROOT, 'web');
@@ -22,7 +23,9 @@ export async function buildSite({ configPath, outDir, standalone = false, now = 
   for (const w of data.warnings) log(`Warnung: ${w}`);
   const { warnings, ...pageData } = data;
 
-  const [css, js, embedJs] = await Promise.all(['styles.css', 'app.js', 'embed.js'].map((f) => readFile(join(WEB, f), 'utf8')));
+  const [css, js, embedJs, listCss, listJs] = await Promise.all(
+    ['styles.css', 'app.js', 'embed.js', 'list.css', 'list.js'].map((f) => readFile(join(WEB, f), 'utf8')));
+  const dienstabende = config.dienstabende ? selectDienstabende(data, config.dienstabende, now) : null;
   const icsFor = (ev) => eventToIcs(ev, { now });
 
   await mkdir(outDir, { recursive: true });
@@ -37,6 +40,15 @@ export async function buildSite({ configPath, outDir, standalone = false, now = 
   }
 
   const fonts = fontFaces((f) => `fonts/${f}`);
+  if (dienstabende) {
+    await mkdir(join(outDir, 'dienstabende'), { recursive: true });
+    const listData = { generatedAt: pageData.generatedAt, timeZone: pageData.timeZone, events: dienstabende };
+    await Promise.all([
+      writeFile(join(outDir, 'dienstabende', 'index.html'), renderListPage({ data: listData, css: listCss, js: listJs, fonts: fontFaces((f) => `../fonts/${f}`) })),
+      writeFile(join(outDir, 'dienstabende.json'), JSON.stringify(pluginJson(dienstabende), null, 1)),
+    ]);
+    log(`${dienstabende.length} Dienstabende -> ${join(outDir, 'dienstabende')}`);
+  }
   await rm(join(outDir, 'ics'), { recursive: true, force: true });
   await mkdir(join(outDir, 'ics'), { recursive: true });
   await mkdir(join(outDir, 'fonts'), { recursive: true });

@@ -48,5 +48,11 @@
       "color": "#5a8f1c",
       "file": "samples/sport.ics"
     }
-  ]
+  ],
+  "dienstabende": {
+    "calendars": [
+      "bereitschaft"
+    ],
+    "titlePrefix": "Dienstabend"
+  }
 }
