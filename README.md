@@ -92,7 +92,7 @@ Akkordeon-Stil des DRK-CMS. Statt der Plugin-Optionen steuern Parameter in der A
 | `anzahl` | höchstens so viele Termine, `0` = alle | `5` |
 | `mehr` | Adresse für den Knopf „Alle Termine ansehen“ (öffnet im ganzen Fenster) | kein Knopf |
 
-Beispiel: `https://rubenvitt.github.io/drk-kalender/dienstabende/?darstellung=monate&anzahl=0`.
+Beispiel: `https://drk-embedded-cal.iuk-ue.de/dienstabende/?darstellung=monate&anzahl=0`.
 Auf `einbetten.html` lassen sich die Parameter ausprobieren, der Code passt sich an.
 
 Welche Termine dazugehören, steht in `calendars.json`:
@@ -106,18 +106,18 @@ Ein Termin zählt, wenn er in einem der Kalender liegt und sein Titel mit dem Pr
 blendet die Seite selbst aus (der laufende Tag bleibt).
 
 Außerdem entsteht `dienstabende.json` im Format, das das Plugin liest. Das Plugin kann also
-auch direkt diese Daten anzeigen: `rubenvitt.github.io` in `allowedHosts` eintragen und als
-Adresse `https://rubenvitt.github.io/drk-kalender/dienstabende.json` angeben.
+auch direkt diese Daten anzeigen: `drk-embedded-cal.iuk-ue.de` in `allowedHosts` eintragen und als
+Adresse `https://drk-embedded-cal.iuk-ue.de/dienstabende.json` angeben.
 
 ## Einbinden
 
-Nach dem ersten Deployment zeigt `https://rubenvitt.github.io/drk-kalender/einbetten.html` den
+`https://drk-embedded-cal.iuk-ue.de/einbetten.html` zeigt den
 fertigen Code und eine Vorschau. Im DRK-CMS ein HTML-Element anlegen:
 
 ```html
-<iframe src="https://rubenvitt.github.io/drk-kalender/" title="Termine im DRK-Kreisverband Uelzen"
+<iframe src="https://drk-embedded-cal.iuk-ue.de/" title="Termine im DRK-Kreisverband Uelzen"
         loading="lazy" data-drk-kalender style="display:block;width:100%;height:900px;border:0"></iframe>
-<script src="https://rubenvitt.github.io/drk-kalender/embed.js" async></script>
+<script src="https://drk-embedded-cal.iuk-ue.de/embed.js" async></script>
 ```
 
 Die Skriptzeile ist optional; sie passt die iframe-Höhe an den Inhalt an. Ohne sie scrollt der
