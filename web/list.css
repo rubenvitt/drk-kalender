@@ -17,9 +17,14 @@ body {
   font-family: var(--font); color: var(--text); line-height: 1.5;
   font-size: clamp(1.0625rem, 0.98rem + 0.61vw, 1.25rem);
 }
-/* Gleiche Spalte wie der Fließtext im DRK-CMS (.textmedia__text: 40rem, mittig). Der
-   iframe selbst steht in einem breiten Listen-Frame, deshalb zentriert die Liste sich hier. */
-#app { max-width: 40rem; margin-inline: auto; }
+/* „Nächster Dienstabend“ steht wie ein Absatz in der Spalte des Fließtexts im DRK-CMS
+   (.textmedia__text: 40rem, mittig). Der iframe selbst steht in einem breiten Frame, deshalb
+   zentriert sich der Hinweis hier. Liste und Monate nutzen die volle Breite. Ohne Akkordeons
+   braucht es auch keinen Platz für Schatten, also oben und unten kein Abstand. */
+[data-display="next"] body { padding-block: 0; }
+[data-display="next"] #app { max-width: 40rem; margin-inline: auto; }
+[data-display="next"] #app > :first-child { margin-top: 0; }
+[data-display="next"] #app > :last-child { margin-bottom: 0; }
 p { margin: 0 0 1em; }
 a { color: var(--blue); }
 :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }

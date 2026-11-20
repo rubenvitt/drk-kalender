@@ -43,6 +43,9 @@
           e.location ? [h('br'), h('strong', null, 'Wo:'), ' ', e.location] : null))));
   }
 
+  // Für das CSS: „Nächster Dienstabend“ steht schmal und ohne Schattenabstand.
+  document.documentElement.dataset.display = display;
+
   const out = [];
   if (!events.length) out.push(h('p', null, 'Zurzeit sind keine Termine geplant.'));
   else if (display === 'next') {
