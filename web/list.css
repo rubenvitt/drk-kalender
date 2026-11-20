@@ -11,10 +11,15 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; background: transparent; }
 body {
-  margin: 0; padding: 0.5rem 1.25rem 1.5rem; /* Platz für die Schatten der Akkordeons */
+  /* Seitlich nur so viel, dass die Schatten nicht abgeschnitten werden: Auf dem Handy rückt
+     das CMS den iframe schon selbst so weit ein wie den Text. */
+  margin: 0; padding: 0.5rem 0.75rem 1.5rem;
   font-family: var(--font); color: var(--text); line-height: 1.5;
   font-size: clamp(1.0625rem, 0.98rem + 0.61vw, 1.25rem);
 }
+/* Gleiche Spalte wie der Fließtext im DRK-CMS (.textmedia__text: 40rem, mittig). Der
+   iframe selbst steht in einem breiten Listen-Frame, deshalb zentriert die Liste sich hier. */
+#app { max-width: 40rem; margin-inline: auto; }
 p { margin: 0 0 1em; }
 a { color: var(--blue); }
 :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
