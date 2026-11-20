@@ -9,7 +9,7 @@ const NOW = Date.parse('2026-11-19T08:00:00+01:00');
 // Regex aus Classes/Domain/EventMapper.php des TYPO3-Plugins
 const PLUGIN_ISO = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}(:\d{2})?(Z|[+-]\d{2}:?\d{2})?)?$/;
 
-const config = await loadConfig(resolve('calendars.json'));
+const config = await loadConfig(resolve('samples/calendars.json'));
 const data = await buildData({ config, now: NOW });
 const list = selectDienstabende(data, config.dienstabende, NOW);
 

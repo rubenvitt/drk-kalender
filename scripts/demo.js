@@ -1,5 +1,5 @@
 // Klickbare Demo: Kalender auf :4810, die gespiegelte Bereitschaftsseite mit eingebettetem
-// Kalender auf :4811 (zweite Origin, wie live). Aufruf: npm run build && npm run demo
+// Kalender auf :4811 (zweite Origin, wie live). Aufruf: npm run build:samples && npm run demo
 // Andere Ports: DEMO_PORT=5000 npm run demo
 import { resolve } from 'node:path';
 import { readFile } from 'node:fs/promises';

@@ -33,7 +33,7 @@ export async function loadSource(cal, { env = process.env, fetchImpl = fetch, ti
         if (attempt) await new Promise((r) => setTimeout(r, 1000 * attempt));
         try {
           const res = await fetchImpl(url, {
-            headers: { 'User-Agent': USER_AGENT, Accept: 'text/calendar, text/plain;q=0.8, */*;q=0.5' },
+            headers: { 'User-Agent': USER_AGENT, Accept: cal.format === 'hiorg' ? 'application/json' : 'text/calendar, text/plain;q=0.8, */*;q=0.5' },
             signal: AbortSignal.timeout(timeoutMs),
             redirect: 'follow',
           });
@@ -52,7 +52,7 @@ export async function loadSource(cal, { env = process.env, fetchImpl = fetch, ti
       if (text === undefined) throw lastError;
     }
     if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
-    if (!/^\s*BEGIN:VCALENDAR/i.test(text)) throw new Error('Antwort ist kein iCal (BEGIN:VCALENDAR fehlt)');
+    if (cal.format !== 'hiorg' && !/^\s*BEGIN:VCALENDAR/i.test(text)) throw new Error('Antwort ist kein iCal (BEGIN:VCALENDAR fehlt)');
     return text;
   } catch (e) {
     throw new Error(`Kalender "${cal.id}" (${describe(cal)}): ${redact(e.message)}`);

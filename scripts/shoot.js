@@ -1,6 +1,6 @@
 // Screenshots für README und zum Verschicken: der Kalender allein und eingebettet in die
 // gespiegelte Bereitschaftsseite von drk-uelzen.de (Mirror aus dem Repo drk-dienstkalender-mockups).
-// Aufruf: npm run build && node scripts/shoot.js
+// Aufruf: npm run build:samples && node scripts/shoot.js
 //   MIRROR_DIR  Pfad zum Mirror (Standard: ../dienstkalender-mockups/mirror/www.drk-uelzen.de)
 //   CHROME      Pfad zu Chrome (Standard: macOS-Installationspfad)
 

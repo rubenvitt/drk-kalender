@@ -3,6 +3,7 @@
 import { createHash } from 'node:crypto';
 import { loadSource } from './fetch.js';
 import { expandCalendar } from './expand.js';
+import { expandHiorg } from './hiorg.js';
 import { registrationFor } from './registration.js';
 import { addDays, addMonths, lastDayOfMonth, wallParts, pad, timeOfDay, formatDate, TZ } from './time.js';
 
@@ -75,7 +76,8 @@ export async function buildData({ config, now = Date.now(), env = process.env, f
 
   const merged = new Map();
   config.calendars.forEach((cal, i) => {
-    const occurrences = expandCalendar(loaded[i].value, {
+    const expand = cal.format === 'hiorg' ? expandHiorg : expandCalendar;
+    const occurrences = expand(loaded[i].value, {
       calendarId: cal.id, windowStart: window.startDate, windowEnd: window.endDate, warn,
     });
     for (const o of occurrences) {

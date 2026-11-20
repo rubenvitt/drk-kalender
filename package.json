@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "node src/build.js",
+    "build:samples": "node src/build.js --config samples/calendars.json",
     "test": "node --test test/*.test.js",
     "serve": "node scripts/serve.js dist",
     "shoot": "node scripts/shoot.js",

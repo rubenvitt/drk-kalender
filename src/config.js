@@ -2,11 +2,14 @@ import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { REGISTRATION_TYPES } from './registration.js';
 
+const FORMATS = ['ical', 'hiorg'];
+
 /**
  * Reads and validates calendars.json. Each calendar names exactly one source:
  *   "url"     public iCal address (webcal:// is accepted)
  *   "urlEnv"  name of an environment variable holding the address (for secret links)
  *   "file"    local .ics file, relative to the config file (sample data, tests)
+ * Optional "format": "ical" (default) or "hiorg" (JSON of the HiOrg-Server calendar subscription).
  */
 export async function loadConfig(path) {
   const abs = resolve(path);
@@ -28,6 +31,7 @@ export function validateConfig(raw, baseDir = process.cwd()) {
     if (!/^#[0-9a-f]{6}$/i.test(c?.color ?? '')) errors.push(`${at}: "color" muss #rrggbb sein`);
     const sources = ['url', 'urlEnv', 'file'].filter((k) => c?.[k]);
     if (sources.length !== 1) errors.push(`${at}: genau eins von "url", "urlEnv", "file" angeben`);
+    if (c?.format != null && !FORMATS.includes(c.format)) errors.push(`${at}: "format" muss ${FORMATS.join(' oder ')} sein`);
     const r = c?.registration;
     if (r) {
       if (!REGISTRATION_TYPES.includes(r.type)) errors.push(`${at}: registration.type muss ${REGISTRATION_TYPES.join(', ')} sein`);

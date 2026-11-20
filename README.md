@@ -4,8 +4,9 @@ Monatskalender für DRK-Termine im Stil von [drk-uelzen.de](https://www.drk-uelz
 mehreren iCal-Kalendern (Bereitschaft, Café, Sport, Blutspende, Kurse …) als statische Seite.
 Er wird per iframe in die Vereinsseite eingebunden und passt sich an Smartphone und Desktop an.
 
-**Prototyp mit Beispieldaten.** Die Termine in `samples/` sind ausgedacht; die Pipeline dahinter ist
-dieselbe, die später echte Kalender lädt.
+**Teils noch Beispieldaten.** Die Bereitschaft kommt live aus dem HiOrg-Server (Kalender-Abo als
+JSON). Blutspende, Kurse, Café und Sport sind noch ausgedachte Termine aus `samples/`; die Pipeline
+dahinter ist dieselbe.
 
 | Eingebettet (Desktop) | Smartphone |
 |---|---|
@@ -63,6 +64,22 @@ Quelle, genau eine davon:
   (Settings → Secrets and variables → Actions) und in `.github/workflows/pages.yml` beim Schritt
   „npm run build“ unter `env:` durchreichen. So steht sie nicht im öffentlichen Repo.
 - `file`: lokale .ics-Datei (Beispieldaten, Tests)
+
+Format, optional:
+
+- `"format": "ical"` (Standard): iCal-Feed
+- `"format": "hiorg"`: Kalender-Abo des HiOrg-Servers (`kalender_abo.php?ov=…&code=…`), liefert
+  JSON. Titel, Ort, Treffpunkt und Bemerkung werden übernommen, der Link zum Termin wird zum
+  Anmeldeknopf. Die Sitzungskennung `sida`, die HiOrg in jeden Link schreibt, wird entfernt. Die
+  Abo-Adresse enthält einen Zugangscode, also immer über `urlEnv` eintragen.
+
+Die Bereitschaft steht so in `calendars.json`, die Adresse liegt im Secret `CAL_URL_BEREITSCHAFT`:
+
+```json
+{ "id": "bereitschaft", "name": "Bereitschaft", "color": "#002d55",
+  "urlEnv": "CAL_URL_BEREITSCHAFT", "format": "hiorg",
+  "registration": { "type": "event-url", "label": "Zum Dienst melden" } }
+```
 
 Wichtig: Was im Kalender steht, wird öffentlich. Private Notizen gehören nicht in diese Kalender.
 
@@ -133,7 +150,8 @@ Der Kalender selbst setzt keine Cookies und lädt nichts von Dritten (Schrift is
 ```fish
 npm install
 npm test                  # Pipeline-Tests, lädt die Beispielkalender über einen lokalen HTTP-Server
-npm run build             # dist/
+npm run build             # dist/ aus calendars.json (braucht CAL_URL_BEREITSCHAFT, siehe unten)
+npm run build:samples     # dist/ nur aus Beispieldaten (samples/calendars.json)
 npm run serve             # Vorschau auf http://127.0.0.1:8080/ (Einbetten: /einbetten.html)
 node src/build.js --standalone   # standalone/drk-kalender.html: eine Datei zum Verschicken
 npm run demo              # klickbare Demo: Kalender auf :4810, gespiegelte DRK-Seite mit iframe auf :4811
@@ -141,6 +159,13 @@ node scripts/live-demo.js # echte drk-uelzen.de-Seite in eigenem Chrome-Fenster,
                           # (nur in diesem Fenster; braucht laufendes npm run demo)
 npm run shoot             # Screenshots nach docs/screenshots/ (braucht Chrome und den Mirror
                           # aus ../dienstkalender-mockups für die eingebettete Ansicht)
+```
+
+Mit echten Daten lokal bauen (fish):
+
+```fish
+set -x CAL_URL_BEREITSCHAFT 'https://www.hiorg-server.de/kalender_abo.php?ov=uel&code=…'
+npm run build
 ```
 
 ## Kostenlos hosten
@@ -161,6 +186,7 @@ Zwei Haken:
 |---|---|
 | `src/fetch.js` | lädt Feeds (Zeitlimit, Wiederholung, Fehlermeldung ohne geheime Adresse) |
 | `src/expand.js` | zerlegt einen Feed in Einzeltermine (ical.js), Zeitzonen über Intl |
+| `src/hiorg.js` | macht aus dem HiOrg-Kalender-Abo (JSON) dieselben Einzeltermine |
 | `src/data.js` | führt Kalender zusammen, entfernt Doppelte, erzeugt Texte und Tage |
 | `src/registration.js` | die offene Anmeldeentscheidung |
 | `src/render.js`, `src/build.js` | schreibt `dist/` |

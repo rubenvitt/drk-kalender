@@ -20,7 +20,8 @@
       "id": "bereitschaft",
       "name": "Bereitschaft",
       "color": "#002d55",
-      "file": "samples/bereitschaft.ics",
+      "urlEnv": "CAL_URL_BEREITSCHAFT",
+      "format": "hiorg",
       "registration": {
         "type": "event-url",
         "label": "Zum Dienst melden"

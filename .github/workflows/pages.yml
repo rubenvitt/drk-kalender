@@ -34,8 +34,8 @@ jobs:
       - run: npm run build
         env:
           # Geheime Kalenderadressen als Repository-Secret anlegen und hier durchreichen,
-          # passend zu "urlEnv" in calendars.json, zum Beispiel:
-          # CAL_URL_BEREITSCHAFT: ${{ secrets.CAL_URL_BEREITSCHAFT }}
+          # passend zu "urlEnv" in calendars.json.
+          CAL_URL_BEREITSCHAFT: ${{ secrets.CAL_URL_BEREITSCHAFT }}
           TZ: UTC
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
