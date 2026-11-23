@@ -4,8 +4,8 @@ Monatskalender für DRK-Termine im Stil von [drk-uelzen.de](https://www.drk-uelz
 mehreren iCal-Kalendern (Bereitschaft, Café, Sport, Blutspende, Kurse …) als statische Seite.
 Er wird per iframe in die Vereinsseite eingebunden und passt sich an Smartphone und Desktop an.
 
-**Teils noch Beispieldaten.** Die Bereitschaft kommt live aus dem HiOrg-Server (Kalender-Abo als
-JSON). Blutspende, Kurse, Café und Sport sind noch ausgedachte Termine aus `samples/`; die Pipeline
+**Teils noch Beispieldaten.** Bereitschaft und Jugendbereitschaft kommen live aus dem HiOrg-Server
+(Kalender-Abo als JSON). Blutspende, Kurse, Café und Sport sind noch ausgedachte Termine aus `samples/`; die Pipeline
 dahinter ist dieselbe.
 
 | Eingebettet (Desktop) | Smartphone |
@@ -81,6 +81,22 @@ Die Bereitschaft steht so in `calendars.json`, die Adresse liegt im Secret `CAL_
   "registration": { "type": "event-url", "label": "Zum Dienst melden" } }
 ```
 
+Titelfilter, optional: Liefern zwei Abos dieselben Termine (die HiOrg-Abos von Bereitschaft und
+Jugendbereitschaft enthalten beide alle Termine), entscheiden Markerwörter im Titel, wohin ein
+Termin gehört. Sie zählen nur als ganzes Wort, Groß- und Kleinschreibung egal („JB: Quiz“ ja,
+„JBX-Treffen“ nein):
+
+```json
+{ "id": "bereitschaft", …, "titleFilter": { "exclude": ["JB", "JBR", "Jugendbereitschaft"] } },
+{ "id": "jugend", "name": "Jugendbereitschaft", "color": "#7b3f98",
+  "urlEnv": "CAL_URL_JUGEND", "format": "hiorg",
+  "titleFilter": { "include": ["JB", "JBR", "Jugendbereitschaft"] } }
+```
+
+`include` behält nur Termine mit einem der Wörter und nimmt den Marker am Titelanfang weg
+(„JB Oh Tannenbaum!“ erscheint als „Oh Tannenbaum!“), `exclude` lässt sie weg. So steht jeder
+Termin genau einmal im Kalender.
+
 Wichtig: Was im Kalender steht, wird öffentlich. Private Notizen gehören nicht in diese Kalender.
 
 ## Anmeldung (noch offen)
@@ -97,9 +113,9 @@ Wie Anmeldungen laufen sollen, ist nicht entschieden. Bis dahin hängt alles an 
 Ohne `registration` gibt es keinen Knopf. In den Beispieldaten haben Kurse, Blutspende und
 Sanitätsdienste einen, Café, Sport und Dienstabende nicht.
 
-## Dienstabende-Liste (wie das TYPO3-Plugin)
+## Listen: Dienstabende und Jugendbereitschaft (wie das TYPO3-Plugin)
 
-Unter `/dienstabende/` liefert der Build dieselbe Ansicht wie das TYPO3-Plugin
+Unter `/dienstabende/` und `/jugend/` liefert der Build dieselbe Ansicht wie das TYPO3-Plugin
 [drk_dienstabende](https://github.com/rubenvitt/typo3-drk-dienstabende): aufklappbare Termine im
 Akkordeon-Stil des DRK-CMS. Statt der Plugin-Optionen steuern Parameter in der Adresse:
 
@@ -107,22 +123,29 @@ Akkordeon-Stil des DRK-CMS. Statt der Plugin-Optionen steuern Parameter in der A
 |---|---|---|
 | `darstellung` | `liste`, `monate` (nach Monaten), `naechster` (nur der nächste Termin als Hinweis) | `liste` |
 | `anzahl` | höchstens so viele Termine, `0` = alle | `5` |
-| `mehr` | Adresse für den Knopf „Alle Termine ansehen“ (öffnet im ganzen Fenster) | kein Knopf |
+| `mehr` | Adresse für den Knopf „Alle Termine ansehen“ (öffnet im ganzen Fenster; nicht bei `"moreButton": false`) | kein Knopf |
 
 Beispiel: `https://drk-embedded-cal.iuk-ue.de/dienstabende/?darstellung=monate&anzahl=0`.
 Auf `einbetten.html` lassen sich die Parameter ausprobieren, der Code passt sich an.
 
-Welche Termine dazugehören, steht in `calendars.json`:
+Welche Listen es gibt und welche Termine dazugehören, steht in `calendars.json`:
 
 ```json
-"dienstabende": { "calendars": ["bereitschaft"], "titlePrefix": "Dienstabend" }
+"lists": [
+  { "id": "dienstabende", "title": "Dienstabende", "calendars": ["bereitschaft"],
+    "titlePrefix": "Dienstabend", "nextLabel": "Nächster offener Dienstabend" },
+  { "id": "jugend", "title": "Jugendbereitschaft", "calendars": ["jugend"],
+    "nextLabel": "Nächster Termin der Jugendbereitschaft", "moreButton": false }
+]
 ```
 
-Ein Termin zählt, wenn er in einem der Kalender liegt und sein Titel mit dem Präfix beginnt.
+`id` ist der Pfad (`/jugend/`), `title` der Seitentitel, `nextLabel` die Überschrift bei
+`darstellung=naechster`. Ein Termin zählt, wenn er in einem der Kalender liegt und, falls
+`titlePrefix` gesetzt ist, sein Titel mit dem Präfix beginnt.
 „Dienstabend: Reanimation und AED“ erscheint als „Reanimation und AED“. Vergangene Termine
 blendet die Seite selbst aus (der laufende Tag bleibt).
 
-Außerdem entsteht `dienstabende.json` im Format, das das Plugin liest. Das Plugin kann also
+Außerdem entsteht je Liste `<id>.json` (`dienstabende.json`, `jugend.json`) im Format, das das Plugin liest. Das Plugin kann also
 auch direkt diese Daten anzeigen: `drk-embedded-cal.iuk-ue.de` in `allowedHosts` eintragen und als
 Adresse `https://drk-embedded-cal.iuk-ue.de/dienstabende.json` angeben.
 
@@ -150,7 +173,7 @@ Der Kalender selbst setzt keine Cookies und lädt nichts von Dritten (Schrift is
 ```fish
 npm install
 npm test                  # Pipeline-Tests, lädt die Beispielkalender über einen lokalen HTTP-Server
-npm run build             # dist/ aus calendars.json (braucht CAL_URL_BEREITSCHAFT, siehe unten)
+npm run build             # dist/ aus calendars.json (braucht CAL_URL_BEREITSCHAFT und CAL_URL_JUGEND)
 npm run build:samples     # dist/ nur aus Beispieldaten (samples/calendars.json)
 npm run serve             # Vorschau auf http://127.0.0.1:8080/ (Einbetten: /einbetten.html)
 node src/build.js --standalone   # standalone/drk-kalender.html: eine Datei zum Verschicken
@@ -165,6 +188,7 @@ Mit echten Daten lokal bauen (fish):
 
 ```fish
 set -x CAL_URL_BEREITSCHAFT 'https://www.hiorg-server.de/kalender_abo.php?ov=uel&code=…'
+set -x CAL_URL_JUGEND 'https://www.hiorg-server.de/kalender_abo.php?ov=uel&code=…'
 npm run build
 ```
 
@@ -187,7 +211,9 @@ Zwei Haken:
 | `src/fetch.js` | lädt Feeds (Zeitlimit, Wiederholung, Fehlermeldung ohne geheime Adresse) |
 | `src/expand.js` | zerlegt einen Feed in Einzeltermine (ical.js), Zeitzonen über Intl |
 | `src/hiorg.js` | macht aus dem HiOrg-Kalender-Abo (JSON) dieselben Einzeltermine |
+| `src/title-filter.js` | Titelfilter je Kalender (Markerwörter wie JB) |
 | `src/data.js` | führt Kalender zusammen, entfernt Doppelte, erzeugt Texte und Tage |
+| `src/dienstabende.js` | Auswahl und Plugin-JSON der Listen (`lists`) |
 | `src/registration.js` | die offene Anmeldeentscheidung |
 | `src/render.js`, `src/build.js` | schreibt `dist/` |
 | `web/` | Oberfläche (CSS, JavaScript ohne Framework), Schrift Open Sans (SIL OFL 1.1) |

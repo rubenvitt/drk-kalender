@@ -48,12 +48,12 @@ test('format "hiorg" läuft durch die ganze Pipeline bis zu den Dienstabenden', 
   const config = validateConfig({
     calendars: [{ id: 'bereitschaft', name: 'Bereitschaft', color: '#002d55', file: FIXTURE, format: 'hiorg',
       registration: { type: 'event-url', label: 'Zum Dienst melden' } }],
-    dienstabende: { calendars: ['bereitschaft'], titlePrefix: 'Dienstabend' },
+    lists: [{ id: 'dienstabende', title: 'Dienstabende', calendars: ['bereitschaft'], titlePrefix: 'Dienstabend' }],
   });
   const data = await buildData({ config, now: NOW });
   assert.equal(data.events.length, 5);
   assert.match(data.events[0].registration.href, /^https:\/\/www\.hiorg-server\.de\/formulare\.php\?ovx=uel&rt=t&ri=\d+&zid=\d+$/);
-  const titles = selectDienstabende(data, config.dienstabende, NOW).map((e) => e.title);
+  const titles = selectDienstabende(data, config.lists[0], NOW).map((e) => e.title);
   assert.deepEqual(titles, ['Skat und Knobeln', 'UAV - Notfallverfahren', 'Dienstabend Sanität', 'Henry Dunant und die Gründung des DRK']);
 });
 

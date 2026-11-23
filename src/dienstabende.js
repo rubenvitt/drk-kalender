@@ -1,6 +1,6 @@
-// Die Dienstabende-Ansicht wie im TYPO3-Plugin drk_dienstabende: eine Auswahl der Termine
-// (bestimmte Kalender, Titel beginnt mit einem Präfix) als Liste, nach Monaten oder als Hinweis.
-// Daneben dienstabende.json im Format, das das Plugin liest.
+// Listenansichten wie im TYPO3-Plugin drk_dienstabende (Dienstabende, Jugendbereitschaft): eine
+// Auswahl der Termine (bestimmte Kalender, optional Titel mit Präfix) als Liste, nach Monaten oder
+// als Hinweis. Daneben <id>.json im Format, das das Plugin liest.
 
 import { addDays, dateKey, wallParts, pad, formatDate } from './time.js';
 
@@ -22,7 +22,7 @@ const monthLabel = (k) => formatDate(k, { month: 'long', year: 'numeric' });
 
 /**
  * @param data   result of buildData
- * @param view   config.dienstabende: { calendars?: string[], titlePrefix?: string }
+ * @param view   one entry of config.lists: { calendars?: string[], titlePrefix?: string }
  */
 export function selectDienstabende(data, view, now) {
   const calendars = new Set(view.calendars?.length ? view.calendars : data.calendars.map((c) => c.id));

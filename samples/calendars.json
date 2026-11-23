@@ -24,6 +24,26 @@
       "registration": {
         "type": "event-url",
         "label": "Zum Dienst melden"
+      },
+      "titleFilter": {
+        "exclude": [
+          "JB",
+          "JBR",
+          "Jugendbereitschaft"
+        ]
+      }
+    },
+    {
+      "id": "jugend",
+      "name": "Jugendbereitschaft",
+      "color": "#7b3f98",
+      "file": "jugend.ics",
+      "titleFilter": {
+        "include": [
+          "JB",
+          "JBR",
+          "Jugendbereitschaft"
+        ]
       }
     },
     {
@@ -49,10 +69,24 @@
       "file": "sport.ics"
     }
   ],
-  "dienstabende": {
-    "calendars": [
-      "bereitschaft"
-    ],
-    "titlePrefix": "Dienstabend"
-  }
+  "lists": [
+    {
+      "id": "dienstabende",
+      "title": "Dienstabende",
+      "calendars": [
+        "bereitschaft"
+      ],
+      "titlePrefix": "Dienstabend",
+      "nextLabel": "Nächster offener Dienstabend"
+    },
+    {
+      "id": "jugend",
+      "title": "Jugendbereitschaft",
+      "calendars": [
+        "jugend"
+      ],
+      "nextLabel": "Nächster Termin der Jugendbereitschaft",
+      "moreButton": false
+    }
+  ]
 }

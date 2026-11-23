@@ -3,6 +3,9 @@ import { dirname, resolve } from 'node:path';
 import { REGISTRATION_TYPES } from './registration.js';
 
 const FORMATS = ['ical', 'hiorg'];
+// Directories and files the build writes itself; a list must not overwrite them.
+const RESERVED_PATHS = ['ics', 'fonts', 'events', 'embed', 'einbetten', 'index'];
+const isWordList = (v) => Array.isArray(v) && v.length > 0 && v.every((w) => typeof w === 'string' && w.trim());
 
 /**
  * Reads and validates calendars.json. Each calendar names exactly one source:
@@ -10,6 +13,8 @@ const FORMATS = ['ical', 'hiorg'];
  *   "urlEnv"  name of an environment variable holding the address (for secret links)
  *   "file"    local .ics file, relative to the config file (sample data, tests)
  * Optional "format": "ical" (default) or "hiorg" (JSON of the HiOrg-Server calendar subscription).
+ * Optional "titleFilter": { include?: string[], exclude?: string[] } (see title-filter.js).
+ * "lists": list pages like the TYPO3 plugin drk_dienstabende, each under /<id>/.
  */
 export async function loadConfig(path) {
   const abs = resolve(path);
@@ -38,25 +43,37 @@ export function validateConfig(raw, baseDir = process.cwd()) {
       if (r.type === 'url' && !/^https?:\/\//.test(r.url ?? '')) errors.push(`${at}: registration.url fehlt`);
       if (r.type === 'mailto' && !/^[^@\s]+@[^@\s]+$/.test(r.to ?? '')) errors.push(`${at}: registration.to fehlt`);
     }
+    const tf = c?.titleFilter;
+    if (tf != null) {
+      const ok = typeof tf === 'object' && ['include', 'exclude'].every((k) => tf[k] == null || isWordList(tf[k]));
+      if (!ok) errors.push(`${at}: titleFilter.include und titleFilter.exclude müssen Listen von Wörtern sein`);
+    }
   });
   const monthsBack = raw?.window?.monthsBack ?? 2;
   const monthsAhead = raw?.window?.monthsAhead ?? 12;
   if (![monthsBack, monthsAhead].every((n) => Number.isInteger(n) && n >= 0 && n <= 36)) {
     errors.push('"window.monthsBack" und "window.monthsAhead" müssen ganze Zahlen von 0 bis 36 sein');
   }
-  const da = raw?.dienstabende;
-  if (da != null) {
-    if (typeof da !== 'object') errors.push('"dienstabende" muss ein Objekt sein');
-    else {
-      for (const id of da.calendars ?? []) if (!seen.has(id)) errors.push(`dienstabende.calendars: unbekannter Kalender "${id}"`);
-      if (da.titlePrefix != null && typeof da.titlePrefix !== 'string') errors.push('dienstabende.titlePrefix muss Text sein');
-    }
-  }
+  if (raw?.dienstabende != null) errors.push('"dienstabende" heißt jetzt "lists": [{ "id": "dienstabende", … }]');
+  const lists = raw?.lists ?? [];
+  if (!Array.isArray(lists)) errors.push('"lists" muss eine Liste sein');
+  const listIds = new Set();
+  (Array.isArray(lists) ? lists : []).forEach((l, i) => {
+    const at = `lists[${i}]${l?.id ? ` (${l.id})` : ''}`;
+    if (!/^[a-z0-9-]+$/.test(l?.id ?? '') || RESERVED_PATHS.includes(l.id)) errors.push(`${at}: "id" nur aus a-z, 0-9 und -, nicht ${RESERVED_PATHS.join(', ')}`);
+    else if (listIds.has(l.id)) errors.push(`${at}: "id" doppelt`);
+    listIds.add(l?.id);
+    if (!l?.title || typeof l.title !== 'string') errors.push(`${at}: "title" fehlt`);
+    if (!Array.isArray(l?.calendars) || !l.calendars.length) errors.push(`${at}: "calendars" fehlt`);
+    else for (const id of l.calendars) if (!seen.has(id)) errors.push(`${at}: unbekannter Kalender "${id}"`);
+    for (const k of ['titlePrefix', 'nextLabel']) if (l?.[k] != null && typeof l[k] !== 'string') errors.push(`${at}: "${k}" muss Text sein`);
+    if (l?.moreButton != null && typeof l.moreButton !== 'boolean') errors.push(`${at}: "moreButton" muss true oder false sein`);
+  });
   if (errors.length) throw new Error('calendars.json ist ungültig:\n  - ' + errors.join('\n  - '));
   return {
     title: raw.title || 'Termine',
     window: { monthsBack, monthsAhead },
-    dienstabende: raw.dienstabende ?? null,
+    lists: (lists ?? []).map((l) => ({ moreButton: true, nextLabel: 'Nächster Termin', ...l })),
     calendars: calendars.map((c) => ({ ...c, file: c.file ? resolve(baseDir, c.file) : undefined })),
   };
 }

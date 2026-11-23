@@ -25,7 +25,7 @@ export async function buildSite({ configPath, outDir, standalone = false, now = 
 
   const [css, js, embedJs, listCss, listJs] = await Promise.all(
     ['styles.css', 'app.js', 'embed.js', 'list.css', 'list.js'].map((f) => readFile(join(WEB, f), 'utf8')));
-  const dienstabende = config.dienstabende ? selectDienstabende(data, config.dienstabende, now) : null;
+  const lists = config.lists.map((list) => ({ list, events: selectDienstabende(data, list, now) }));
   const icsFor = (ev) => eventToIcs(ev, { now });
 
   await mkdir(outDir, { recursive: true });
@@ -40,21 +40,24 @@ export async function buildSite({ configPath, outDir, standalone = false, now = 
   }
 
   const fonts = fontFaces((f) => `fonts/${f}`);
-  if (dienstabende) {
-    await mkdir(join(outDir, 'dienstabende'), { recursive: true });
-    const listData = { generatedAt: pageData.generatedAt, timeZone: pageData.timeZone, events: dienstabende };
+  for (const { list, events } of lists) {
+    await mkdir(join(outDir, list.id), { recursive: true });
+    const listData = {
+      generatedAt: pageData.generatedAt, timeZone: pageData.timeZone,
+      title: list.title, nextLabel: list.nextLabel, moreButton: list.moreButton, events,
+    };
     await Promise.all([
-      writeFile(join(outDir, 'dienstabende', 'index.html'), renderListPage({ data: listData, css: listCss, js: listJs, fonts: fontFaces((f) => `../fonts/${f}`) })),
-      writeFile(join(outDir, 'dienstabende.json'), JSON.stringify(pluginJson(dienstabende), null, 1)),
+      writeFile(join(outDir, list.id, 'index.html'), renderListPage({ data: listData, css: listCss, js: listJs, fonts: fontFaces((f) => `../fonts/${f}`) })),
+      writeFile(join(outDir, `${list.id}.json`), JSON.stringify(pluginJson(events), null, 1)),
     ]);
-    log(`${dienstabende.length} Dienstabende -> ${join(outDir, 'dienstabende')}`);
+    log(`${events.length} Termine (${list.title}) -> ${join(outDir, list.id)}`);
   }
   await rm(join(outDir, 'ics'), { recursive: true, force: true });
   await mkdir(join(outDir, 'ics'), { recursive: true });
   await mkdir(join(outDir, 'fonts'), { recursive: true });
   await Promise.all([
     writeFile(join(outDir, 'index.html'), renderCalendarPage({ data: pageData, css, js, fonts })),
-    writeFile(join(outDir, 'einbetten.html'), renderEmbedPage({ title: pageData.title, css, fonts })),
+    writeFile(join(outDir, 'einbetten.html'), renderEmbedPage({ title: pageData.title, lists: config.lists, css, fonts })),
     writeFile(join(outDir, 'embed.js'), embedJs),
     writeFile(join(outDir, 'events.json'), JSON.stringify(pageData, null, 1)),
     writeFile(join(outDir, '.nojekyll'), ''),

@@ -36,6 +36,7 @@ jobs:
           # Geheime Kalenderadressen als Repository-Secret anlegen und hier durchreichen,
           # passend zu "urlEnv" in calendars.json.
           CAL_URL_BEREITSCHAFT: ${{ secrets.CAL_URL_BEREITSCHAFT }}
+          CAL_URL_JUGEND: ${{ secrets.CAL_URL_JUGEND }}
           TZ: UTC
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

@@ -190,4 +190,13 @@ SUMMARY:Blutspende Uelzen
 LOCATION:DRK-Kreisverband\, Wilhelm-Seedorf-Straße 3\, 29525 Uelzen
 DESCRIPTION:Kopie aus dem Blutspende-Kalender (Betreuung durch die Bereitschaft).
 END:VEVENT
+BEGIN:VEVENT
+UID:16900001-17100001@uel.hiorg-server.de
+DTSTAMP:20261101T090000Z
+DTSTART;TZID=Europe/Berlin:20270212T170000
+DTEND;TZID=Europe/Berlin:20270212T190000
+SUMMARY:Dienstabend JBR: Erste Hilfe für Kinder
+LOCATION:DRK-Unterkunft\, Miesbacher Straße 4\, 29525 Uelzen
+DESCRIPTION:Termin der Jugendbereitschaft\, steht auch im Feed der Bereitschaft.
+END:VEVENT
 END:VCALENDAR

@@ -1,7 +1,9 @@
-// Dienstabende-Liste, gesteuert über Query-Parameter (wie die Optionen des TYPO3-Plugins):
+// Terminliste (Dienstabende, Jugendbereitschaft …), gesteuert über Query-Parameter (wie die
+// Optionen des TYPO3-Plugins):
 //   darstellung = liste (Standard) | monate | naechster
 //   anzahl      = höchstens so viele Termine, 0 = alle (Standard 5)
-//   mehr        = Adresse für den Knopf „Alle Termine ansehen“ (optional, http/https)
+//   mehr        = Adresse für den Knopf „Alle Termine ansehen“ (optional, http/https;
+//                 nur wenn die Liste in calendars.json moreButton nicht abschaltet)
 // Alle Termindaten werden nur als Text eingesetzt.
 (() => {
   'use strict';
@@ -13,7 +15,7 @@
   const display = DISPLAY[(q.get('darstellung') || '').toLowerCase()] || 'list';
   let limit = q.has('anzahl') ? parseInt(q.get('anzahl'), 10) : 5;
   if (!Number.isFinite(limit) || limit < 0) limit = 5;
-  const more = (() => {
+  const more = data.moreButton === false ? null : (() => {
     try { const u = new URL(q.get('mehr') || ''); return /^https?:$/.test(u.protocol) ? u.href : null; } catch { return null; }
   })();
 
@@ -43,14 +45,14 @@
           e.location ? [h('br'), h('strong', null, 'Wo:'), ' ', e.location] : null))));
   }
 
-  // Für das CSS: „Nächster Dienstabend“ steht schmal und ohne Schattenabstand.
+  // Für das CSS: „Nächster Termin“ steht schmal und ohne Schattenabstand.
   document.documentElement.dataset.display = display;
 
   const out = [];
   if (!events.length) out.push(h('p', null, 'Zurzeit sind keine Termine geplant.'));
   else if (display === 'next') {
     const e = events[0];
-    out.push(h('h4', { class: 'next' }, 'Nächster offener Dienstabend: ', e.dayLong, e.time ? ', ' + e.time + ' Uhr' : null),
+    out.push(h('h4', { class: 'next' }, (data.nextLabel || 'Nächster Termin') + ': ', e.dayLong, e.time ? ', ' + e.time + ' Uhr' : null),
       h('p', null, e.title, e.location ? ' – ' + e.location : null));
   } else if (display === 'months') {
     const months = new Map();
