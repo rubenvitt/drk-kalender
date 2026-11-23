@@ -78,12 +78,16 @@ function listSection(list) {
 <p>Liste wie im TYPO3-Plugin, unter <code>${id}/</code>. Gesteuert wird sie über Parameter in der Adresse:</p>
 <ul>
   <li><code>darstellung</code>: <code>liste</code> (Standard), <code>monate</code> oder <code>naechster</code> (nur der nächste Termin als Hinweis)</li>
-  <li><code>anzahl</code>: höchstens so viele Termine, <code>0</code> = alle (Standard 5)</li>${list.moreButton ? `
+  <li><code>anzahl</code>: höchstens so viele Termine, <code>0</code> = alle (Standard 5)</li>
+  <li><code>ausrichtung</code>: <code>mitte</code> setzt den nächsten Termin zentriert (Standard linksbündig)</li>
+  <li><code>ort</code>: <code>nein</code> lässt den Ort weg, etwa wenn er auf der Seite schon steht</li>${list.moreButton ? `
   <li><code>mehr</code>: Adresse für den Knopf „Alle Termine ansehen“ (optional)</li>` : ''}
 </ul>
 <form class="da-form" data-list="${id}" data-title="${escapeHtml(list.title)}">
   <label>Darstellung <select name="darstellung"><option value="liste">Aufklappbare Liste</option><option value="monate">Liste nach Monaten</option><option value="naechster">Nur der nächste Termin</option></select></label>
-  <label>Anzahl <input name="anzahl" type="number" min="0" value="5"></label>${more}
+  <label>Anzahl <input name="anzahl" type="number" min="0" value="5"></label>
+  <label>Ausrichtung <select name="ausrichtung"><option value="">Linksbündig</option><option value="mitte">Mittig</option></select></label>
+  <label>Ort <select name="ort"><option value="">Anzeigen</option><option value="nein">Weglassen</option></select></label>${more}
 </form>
 <pre data-snippet="${id}"></pre>
 <iframe data-preview="${id}" data-drk-kalender title="${escapeHtml(list.title)}" style="height:600px;max-width:52rem"></iframe>
@@ -140,6 +144,8 @@ ${lists.map(listSection).join('\n')}
       var d = form.darstellung.value, a = form.anzahl.value, m = form.mehr ? form.mehr.value.trim() : '';
       if (d !== 'liste') params.set('darstellung', d);
       if (a !== '' && a !== '5') params.set('anzahl', a);
+      if (form.ausrichtung.value) params.set('ausrichtung', form.ausrichtung.value);
+      if (form.ort.value) params.set('ort', form.ort.value);
       if (m) params.set('mehr', m);
       var qs = params.toString();
       var src = base + id + '/' + (qs ? '?' + qs : '');

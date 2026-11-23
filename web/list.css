@@ -25,6 +25,8 @@ body {
 [data-display="next"] #app { max-width: 40rem; margin-inline: auto; }
 [data-display="next"] #app > :first-child { margin-top: 0; }
 [data-display="next"] #app > :last-child { margin-bottom: 0; }
+/* ausrichtung=mitte: für Abschnitte, deren Text das CMS zentriert setzt */
+[data-display="next"][data-align="center"] #app { text-align: center; }
 p { margin: 0 0 1em; }
 a { color: var(--blue); }
 :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }

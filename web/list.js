@@ -4,6 +4,8 @@
 //   anzahl      = höchstens so viele Termine, 0 = alle (Standard 5)
 //   mehr        = Adresse für den Knopf „Alle Termine ansehen“ (optional, http/https;
 //                 nur wenn die Liste in calendars.json moreButton nicht abschaltet)
+//   ausrichtung = links (Standard) | mitte; nur bei darstellung=naechster
+//   ort         = ja (Standard) | nein: Ort weglassen, etwa wenn er auf der Seite schon steht
 // Alle Termindaten werden nur als Text eingesetzt.
 (() => {
   'use strict';
@@ -13,6 +15,8 @@
 
   const DISPLAY = { liste: 'list', list: 'list', monate: 'months', months: 'months', naechster: 'next', 'nächster': 'next', next: 'next' };
   const display = DISPLAY[(q.get('darstellung') || '').toLowerCase()] || 'list';
+  const centered = ['mitte', 'zentriert', 'center'].includes((q.get('ausrichtung') || '').toLowerCase());
+  const showLocation = !['nein', '0', 'aus', 'false'].includes((q.get('ort') || '').toLowerCase());
   let limit = q.has('anzahl') ? parseInt(q.get('anzahl'), 10) : 5;
   if (!Number.isFinite(limit) || limit < 0) limit = 5;
   const more = data.moreButton === false ? null : (() => {
@@ -42,18 +46,19 @@
         e.description ? h('p', null, lines(e.description)) : null,
         h('p', null,
           h('strong', null, 'Wann:'), ' ', e.dayLong, e.time ? ', ab ' + e.time + ' Uhr' : null,
-          e.location ? [h('br'), h('strong', null, 'Wo:'), ' ', e.location] : null))));
+          showLocation && e.location ? [h('br'), h('strong', null, 'Wo:'), ' ', e.location] : null))));
   }
 
   // Für das CSS: „Nächster Termin“ steht schmal und ohne Schattenabstand.
   document.documentElement.dataset.display = display;
+  if (centered) document.documentElement.dataset.align = 'center';
 
   const out = [];
   if (!events.length) out.push(h('p', null, 'Zurzeit sind keine Termine geplant.'));
   else if (display === 'next') {
     const e = events[0];
     out.push(h('h4', { class: 'next' }, (data.nextLabel || 'Nächster Termin') + ': ', e.dayLong, e.time ? ', ' + e.time + ' Uhr' : null),
-      h('p', null, e.title, e.location ? ' – ' + e.location : null));
+      h('p', null, e.title, showLocation && e.location ? ' – ' + e.location : null));
   } else if (display === 'months') {
     const months = new Map();
     for (const e of events) { if (!months.has(e.month)) months.set(e.month, []); months.get(e.month).push(e); }

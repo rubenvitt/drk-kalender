@@ -124,6 +124,8 @@ Akkordeon-Stil des DRK-CMS. Statt der Plugin-Optionen steuern Parameter in der A
 | `darstellung` | `liste`, `monate` (nach Monaten), `naechster` (nur der nächste Termin als Hinweis) | `liste` |
 | `anzahl` | höchstens so viele Termine, `0` = alle | `5` |
 | `mehr` | Adresse für den Knopf „Alle Termine ansehen“ (öffnet im ganzen Fenster; nicht bei `"moreButton": false`) | kein Knopf |
+| `ausrichtung` | `links`, `mitte` (nur bei `darstellung=naechster`, für zentriert gesetzte Abschnitte im CMS) | `links` |
+| `ort` | `ja`, `nein` (Ort weglassen, etwa wenn die Adresse auf der Seite schon steht) | `ja` |
 
 Beispiel: `https://drk-embedded-cal.iuk-ue.de/dienstabende/?darstellung=monate&anzahl=0`.
 Auf `einbetten.html` lassen sich die Parameter ausprobieren, der Code passt sich an.
@@ -135,7 +137,7 @@ Welche Listen es gibt und welche Termine dazugehören, steht in `calendars.json`
   { "id": "dienstabende", "title": "Dienstabende", "calendars": ["bereitschaft"],
     "titlePrefix": "Dienstabend", "nextLabel": "Nächster offener Dienstabend" },
   { "id": "jugend", "title": "Jugendbereitschaft", "calendars": ["jugend"],
-    "nextLabel": "Nächster Termin der Jugendbereitschaft", "moreButton": false }
+    "nextLabel": "Nächster Termin", "moreButton": false }
 ]
 ```
 
